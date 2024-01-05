@@ -30,7 +30,7 @@ public class TestBrowser extends TestBase {
         String expectedUrl = "https://the-internet.herokuapp.com/secure";
         Assert.assertEquals(actualUrl, expectedUrl);
 
-        wait(2);
+        wait(3);
         driver.quit();
     }
 
