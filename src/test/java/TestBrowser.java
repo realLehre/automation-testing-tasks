@@ -6,6 +6,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TestBrowser extends TestBase {
+
+    WebElement usernameField;
+    WebElement passwordField;
+    WebElement submitBtn;
+
     @Test(priority = 1, description = "Validate that user cannot login using wrong credentials")
     public void validateUserCannotLoginUsingWrongCredentials() {
         getURL("https://the-internet.herokuapp.com/");
@@ -16,13 +21,13 @@ public class TestBrowser extends TestBase {
         element.click();
 
         wait(1);
-        WebElement usernameField = driver.findElement(By.id("username"));
-        WebElement passwordField = driver.findElement(By.id("password"));
+        usernameField = driver.findElement(By.id("username"));
+        passwordField = driver.findElement(By.id("password"));
         usernameField.sendKeys("tomsmith");
         wait(1);
         passwordField.sendKeys("SuperSecretPassword");
 
-        WebElement submitBtn = driver.findElement(By.xpath("//button[@type='submit']"));
+        submitBtn = driver.findElement(By.xpath("//button[@type='submit']"));
         submitBtn.click();
 
         WebElement alertMsg = driver.findElement(By.id("flash"));
@@ -36,8 +41,12 @@ public class TestBrowser extends TestBase {
     }
 
     @Test(priority = 1, description = "Validate that user can login with correct credentials")
-    public void validateUserCanLoginWithCorrectCredentials(){
+    public void validateUserCanLoginWithCorrectCredentials() {
+        usernameField.sendKeys("tomsmith");
+        wait(1);
+        passwordField.sendKeys("SuperSecretPassword");
 
+        submitBtn.click();
     }
 
 
