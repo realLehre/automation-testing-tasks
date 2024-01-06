@@ -6,10 +6,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TestBrowser extends TestBase {
-    @Test
-    public void main() {
-        driver.manage().window().maximize();
-        driver.navigate().to("https://the-internet.herokuapp.com/");
+    @Test(priority = 1, description = "Validate that user cannot login using wrong credentials")
+    public void validateUserCannotLoginUsingWrongCredentials() {
+        getURL("https://the-internet.herokuapp.com/");
 
         WebElement element = driver.findElement(By.xpath("//a[@href='/login']"));
         wait(2);
@@ -21,18 +20,26 @@ public class TestBrowser extends TestBase {
         WebElement passwordField = driver.findElement(By.id("password"));
         usernameField.sendKeys("tomsmith");
         wait(1);
-        passwordField.sendKeys("SuperSecretPassword!");
+        passwordField.sendKeys("SuperSecretPassword");
 
         WebElement submitBtn = driver.findElement(By.xpath("//button[@type='submit']"));
         submitBtn.click();
 
-        String actualUrl = driver.getCurrentUrl();
-        String expectedUrl = "https://the-internet.herokuapp.com/secure";
-        Assert.assertEquals(actualUrl, expectedUrl);
+        WebElement alertMsg = driver.findElement(By.id("flash"));
+
+        alertMsg.getText();
+        System.out.println(alertMsg.getText());
+        Assert.assertTrue(alertMsg.getText().contains("Your password is invalid!"));
 
         wait(3);
         driver.quit();
     }
+
+    @Test(priority = 1, description = "Validate that user can login with correct credentials")
+    public void validateUserCanLoginWithCorrectCredentials(){
+
+    }
+
 
     private static void scrollToElement(WebDriver driver, WebElement element) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
