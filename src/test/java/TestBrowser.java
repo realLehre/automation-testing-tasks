@@ -10,6 +10,7 @@ public class TestBrowser extends TestBase {
     WebElement usernameField;
     WebElement passwordField;
     WebElement submitBtn;
+    WebElement alertMsg;
 
     @Test(priority = 1, description = "Validate that user cannot login using wrong credentials")
     public void validateUserCannotLoginUsingWrongCredentials() {
@@ -30,25 +31,32 @@ public class TestBrowser extends TestBase {
         submitBtn = driver.findElement(By.xpath("//button[@type='submit']"));
         submitBtn.click();
 
-        WebElement alertMsg = driver.findElement(By.id("flash"));
 
-        alertMsg.getText();
-        System.out.println(alertMsg.getText());
-        Assert.assertTrue(alertMsg.getText().contains("Your password is invalid!"));
+        assertTest("Your password is invalid!");
+
 
         wait(3);
-        driver.quit();
     }
 
-    @Test(priority = 1, description = "Validate that user can login with correct credentials")
+    @Test(priority = 2, description = "Validate that user can login with correct credentials")
     public void validateUserCanLoginWithCorrectCredentials() {
+        usernameField = driver.findElement(By.id("username"));
+        passwordField = driver.findElement(By.id("password"));
         usernameField.sendKeys("tomsmith");
         wait(1);
-        passwordField.sendKeys("SuperSecretPassword");
+        passwordField.sendKeys("SuperSecretPassword!");
 
+        submitBtn = driver.findElement(By.xpath("//button[@type='submit']"));
         submitBtn.click();
+        assertTest("You logged into a secure area!");
+        wait(3);
     }
 
+    public void assertTest(String textToConfirm) {
+        alertMsg = driver.findElement(By.id("flash"));
+        alertMsg.getText();
+        Assert.assertTrue(alertMsg.getText().contains(textToConfirm));
+    }
 
     private static void scrollToElement(WebDriver driver, WebElement element) {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;

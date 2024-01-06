@@ -2,6 +2,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import java.time.Duration;
@@ -34,6 +35,14 @@ public class TestBase {
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException e) {
+        }
+    }
+
+    @AfterClass
+    public void tearDown() {
+        System.out.println("Inside the after class annotation");
+        if (null != driver) {
+//            driver.quit();
         }
     }
 }
