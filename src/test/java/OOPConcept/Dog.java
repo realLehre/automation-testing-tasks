@@ -5,7 +5,11 @@ public class Dog {
 
     private String breed = "German Shepherd";
 
-    private String Bark(){
-        return (name + "barks");
+    private String bark(){
+        return (name + " barks");
+    }
+
+    public  String feed(){
+        return ("When " + bark() + " feed him");
     }
 }
